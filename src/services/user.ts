@@ -33,6 +33,10 @@ export class UserService{
         return primsaClient.user.findUnique({where: {email}})
     }
 
+    public static getUserById(id: string){
+        return primsaClient.user.findUnique({where: {id}})
+    }
+
     private static generateHash(salt: string , password: string){
         return createHmac('sha256', salt).update(password).digest('hex') 
     }
@@ -48,4 +52,8 @@ export class UserService{
         const token = JWT.sign({id: user.id,email: user.email}, process.env.SECRET_KEY as string , {expiresIn: '1d'})
         return token;
     } 
+
+    public static async decodeJWTToken(token:string){
+        return JWT.verify(token, process.env.SECRET_KEY as string);
+    }
 }

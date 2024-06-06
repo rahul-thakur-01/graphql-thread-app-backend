@@ -8,8 +8,13 @@ const queryResolvers = {
         });
         return token;
     },
-    getCurrentLoggedInUser: async () => {
-        
+    getCurrentLoggedInUser: async (_:any, parameter: any, context: any) => {
+        if(context && context.user){
+            const id = context.user.id;
+            const user = await UserService.getUserById(id);
+            return user;
+        }
+        throw new Error('User not logged in');
     }
 };
 
