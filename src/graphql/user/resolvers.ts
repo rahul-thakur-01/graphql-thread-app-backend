@@ -1,8 +1,12 @@
 import { CreateUserPayload, UserService } from "../../services/user";
 
 const queryResolvers = {
-    hello: async () => {
-        return "Hello World";
+    getUserToken: async (_: any, payload: {email: string, password: string}) => {
+        const token = await UserService.getUserToken({
+            email: payload.email,
+            password: payload.password
+        });
+        return token;
     }
 };
 
