@@ -45,8 +45,7 @@ export class UserService{
         const userSalt = user.salt;
         const userHashedPassword = UserService.generateHash(userSalt, password);
         if(userHashedPassword !== user.password) throw new Error('Invalid email or password');
-
-        const token = JWT.sign({id: user.id,email: user.email}, process.env.JWT_SECRET || 'secret', {expiresIn: '1d'})
+        const token = JWT.sign({id: user.id,email: user.email}, process.env.SECRET_KEY as string , {expiresIn: '1d'})
         return token;
-    }
+    } 
 }
