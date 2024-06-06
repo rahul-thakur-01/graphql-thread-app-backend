@@ -1,3 +1,5 @@
+import { CreateUserPayload, UserService } from "../../services/user";
+
 const queryResolvers = {
     hello: async () => {
         return "Hello World";
@@ -5,8 +7,9 @@ const queryResolvers = {
 };
 
 const mutationResolvers = {
-    createUser: async (_: any, { firstName, lastName, email, password } : any) => {
-        return `User created: ${firstName} ${lastName}`;
+    createUser: async (_: any, payload : CreateUserPayload) => {
+        const response = await UserService.createUser(payload);
+        return response.id;
     }
 }
 

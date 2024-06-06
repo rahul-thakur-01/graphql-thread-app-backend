@@ -1,20 +1,25 @@
 import { ApolloServer } from '@apollo/server';
-import {mutations} from './user/mutations';
-import {queries} from './user/queries';
-import {resolvers} from './user/resolvers';
+import {User} from './user/index';
 
 
 async function createApolloGraphQLServer() {
     const gqlServer = new ApolloServer({
         typeDefs: `
             type Query {
-                ${queries}
+                ${User.queries},
             }
             type Mutation {
-                ${mutations}
+                ${User.mutations},
             }
         `,
-        resolvers
+        resolvers: {
+            Query: {
+                ...User.resolvers.Query,
+            }, 
+            Mutation: {
+                ...User.resolvers.Mutation
+            }
+        }
     });
 
     await gqlServer.start();
