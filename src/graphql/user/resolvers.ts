@@ -7,6 +7,9 @@ const queryResolvers = {
             password: payload.password
         });
         return token;
+    },
+    getCurrentLoggedInUser: async () => {
+        
     }
 };
 
